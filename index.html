@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 카톡 공유 미리보기(기본) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="예진이 돌잔치 초대장" />
+  <meta property="og:description" content="2026년 3월 14일 토요일 오전 12시 · 명진컨벤션웨딩뷔페" />
+  <!-- TODO: 대표 이미지 경로를 실제 파일로 교체하세요 -->
+  <meta property="og:image" content="assets/og.jpg" />
+
+  <title>예진이 돌잔치 초대장</title>
+
+  <style>
+    :root{
+      --bg:#F3F2EE;
+      --card:#FFFFFF;
+      --text:#1f1f1f;
+      --muted:#6b6b6b;
+      --accent:#9A6A3A; /* 브라운 톤 */
+      --accent2:#C08A53;
+      --shadow: 0 10px 24px rgba(0,0,0,.10);
+      --radius:18px;
+      --max: 460px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo",
+                   "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a{ color:inherit; text-decoration:none; }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 14px 90px;
+    }
+
+    .top-title{
+      text-align:center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      letter-spacing: .22em;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    .date-line{
+      text-align:center;
+      margin: 6px 0 14px;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .hero-card{
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      margin: 0 auto 16px;
+    }
+
+    .hero-img{
+      width:100%;
+      display:block;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      background:#ddd;
+    }
+
+    .section{
+      margin-top: 22px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 16px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin: 6px 0 14px;
+      color: var(--accent);
+      letter-spacing: .28em;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .invite-head{
+      text-align:center;
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+
+    .invite-text{
+      text-align:center;
+      line-height: 1.75;
+      color: #2a2a2a;
+      margin: 0 0 14px;
+      white-space: pre-line;
+    }
+
+    .family-photo{
+      width:100%;
+      display:block;
+      border-radius: 14px;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background:#ddd;
+      margin-top: 10px;
+    }
+
+    .host{
+      text-align:center;
+      margin-top: 14px;
+      line-height:1.6;
+      font-weight: 700;
+      color:#2a2a2a;
+    }
+
+    /* 캘린더 */
+    .cal-wrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 8px;
+    }
+    .cal-month{
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: .12em;
+      margin-top: 2px;
+    }
+    .cal-grid{
+      width:100%;
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      padding: 6px 6px 2px;
+    }
+    .cal-dow{
+      font-size: 12px;
+      color: var(--muted);
+      text-align:center;
+      font-weight:700;
+      padding-bottom: 6px;
+    }
+    .cal-day{
+      text-align:center;
+      padding: 8px 0;
+      border-radius: 999px;
+      font-weight:700;
+      color:#2a2a2a;
+      user-select:none;
+    }
+    .cal-day.dim{ color:#b4b4b4; font-weight:600; }
+    .cal-day.highlight{
+      background: var(--accent);
+      color:#fff;
+    }
+
+    /* 갤러리: 원형 썸네일 + 큰 원형 강조 */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      align-items:center;
+    }
+    .thumb{
+      width:100%;
+      aspect-ratio: 1/1;
+      border-radius: 999px;
+      object-fit: cover;
+      background:#ddd;
+      box-shadow: 0 8px 18px rgba(0,0,0,.12);
+      cursor:pointer;
+      transition: transform .12s ease;
+    }
+    .thumb:active{ transform: scale(.98); }
+    .thumb.big{
+      grid-column: 1 / span 2;
+      width: 68%;
+      justify-self:center;
+    }
+
+    /* 지도 */
+    .map-wrap{
+      max-width: 420px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow:hidden;
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+    }
+    .place{
+      text-align:center;
+      line-height:1.7;
+      margin-top: 14px;
+      color:#2a2a2a;
+      font-weight:700;
+    }
+    .place .name{
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+    .place .addr{
+      font-weight:700;
+      margin-top: 6px;
+    }
+    .place .tel{
+      color: var(--muted);
+      font-weight:800;
+      margin-top: 4px;
+    }
+
+    .btn-row{
+      display:flex;
+      gap: 10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .btn{
+      border: 1px solid rgba(154,106,58,.35);
+      background: #fff;
+      color: var(--accent);
+      font-weight: 900;
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      box-shadow: 0 6px 14px rgba(0,0,0,.08);
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    /* 계좌 */
+    .account-box{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      align-items:center;
+      text-align:center;
+    }
+    .account-title{
+      font-weight: 900;
+      letter-spacing:.12em;
+      color: var(--accent);
+    }
+    .account-line{
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .account-sub{
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    /* 라이트박스 */
+    .lb{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.78);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 9999;
+    }
+    .lb.open{ display:flex; }
+    .lb-inner{
+      width: min(520px, 100%);
+      position: relative;
+    }
+    .lb-img{
+      width:100%;
+      border-radius: 16px;
+      background:#222;
+      aspect-ratio: 4 / 5;
+      object-fit: contain;
+      display:block;
+    }
+    .lb-close{
+      position:absolute;
+      top: -12px;
+      right: -10px;
+      width: 44px;
+      height: 44px;
+      border:none;
+      border-radius: 999px;
+      background:#fff;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      font-size: 22px;
+      cursor:pointer;
+    }
+    .lb-nav{
+      position:absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border:none;
+      border-radius: 999px;
+      background:#fff;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      font-size: 20px;
+      cursor:pointer;
+      opacity: .95;
+    }
+    .lb-prev{ left: -10px; }
+    .lb-next{ right: -10px; }
+
+    /* 플로팅 맨 위로 */
+    .fab-top{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      border: none;
+      background: #fff;
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+      cursor:pointer;
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 900;
+      z-index: 9998;
+      display:none;
+      align-items:center;
+      justify-content:center;
+    }
+    .fab-top.show{ display:flex; }
+
+    /* 토스트 */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 72px;
+      transform: translateX(-50%);
+      background: rgba(31,31,31,.92);
+      color:#fff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index: 9999;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(-6px);
+    }
+
+    /* 작은 화면에서 여백 조정 */
+    @media (max-width: 360px){
+      .date-line{ font-size: 16px; }
+      .thumb.big{ width: 78%; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <div class="top-title">돌잔치 안내</div>
+    <div class="date-line">2026년 3월 14일 토요일 오전 12시</div>
+
+    <!-- 히어로 -->
+    <div class="hero-card">
+      <!-- TODO: 대표 사진 파일명으로 교체 -->
+      <img class="hero-img" src="assets/hero.jpg" alt="예진이 대표 사진" />
+    </div>
+
+    <!-- 캘린더 -->
+    <section class="section">
+      <div class="cal-wrap">
+        <div class="cal-month">3월</div>
+
+        <div class="cal-grid" aria-label="달력">
+          <!-- 요일 -->
+          <div class="cal-dow">일</div><div class="cal-dow">월</div><div class="cal-dow">화</div>
+          <div class="cal-dow">수</div><div class="cal-dow">목</div><div class="cal-dow">금</div><div class="cal-dow">토</div>
+
+          <!-- 2026년 3월(샘플): 시작 요일이 다를 수 있어도 "초대장 느낌"용으로는 충분 -->
+          <div class="cal-day dim">1</div><div class="cal-day">2</div><div class="cal-day">3</div>
+          <div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+
+          <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div>
+          <div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day highlight">14</div>
+
+          <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div>
+          <div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
+
+          <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div>
+          <div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
+
+          <div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day">31</div>
+          <div class="cal-day dim"></div><div class="cal-day dim"></div><div class="cal-day dim"></div><div class="cal-day dim"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 갤러리 -->
+    <section class="section" style="background:#E7ECEB;">
+      <div class="section-title">갤러리</div>
+
+      <div class="gallery" id="gallery">
+        <!-- TODO: 사진 파일명으로 교체 -->
+        <img class="thumb" data-idx="0" src="assets/g1.jpg" alt="갤러리 1" />
+        <img class="thumb big" data-idx="1" src="assets/g2.jpg" alt="갤러리 2 (큰 원)" />
+        <img class="thumb" data-idx="2" src="assets/g3.jpg" alt="갤러리 3" />
+        <img class="thumb" data-idx="3" src="assets/g4.jpg" alt="갤러리 4" />
+        <img class="thumb" data-idx="4" src="assets/g5.jpg" alt="갤러리 5" />
+        <img class="thumb" data-idx="5" src="assets/g6.jpg" alt="갤러리 6" />
+        <img class="thumb" data-idx="6" src="assets/g7.jpg" alt="갤러리 7" />
+      </div>
+    </section>
+
+    <!-- 초대글 -->
+    <section class="section">
+      <div class="invite-head">예진이의 첫 생일을 함께 축하해주세요</div>
+
+      <p class="invite-text">
+저희 부부에게
+더 큰 사랑과 감사를 깨닫게 해준 예진이가
+건강하게 자라 첫 돌을 맞이하게 되었습니다.
+
+아낌없는 관심과 사랑을 보내주신
+마음신 분들을 초대하여
+행복한 날, 함께 기쁨을 나누고 싶습니다.
+
+꼭 오셔서 예쁘게 자란 예진이에게
+따뜻한 말씀도 해주시고
+함께 웃어 주셨으면 합니다.
+      </p>
+
+      <!-- TODO: 가족 사진 파일명으로 교체 -->
+      <img class="family-photo" src="assets/family.jpg" alt="가족 사진" />
+
+      <div class="host">
+        오늘의 주인공 예진이의<br/>
+        아빠 윤창호 · 엄마 도티안트
+      </div>
+    </section>
+
+    <!-- 오시는 길 -->
+    <section class="section">
+      <div class="section-title">오시는 길</div>
+
+      <div class="map-wrap">
+        <!-- 카카오맵 - 지도퍼가기 (노드) -->
+        <div id="daumRoughmapContainer1769079577391"
+             class="root_daum_roughmap root_daum_roughmap_landing"></div>
+      </div>
+
+      <div class="place">
+        <div class="name">명진컨벤션웨딩뷔페</div>
+        <div class="addr">인천 강화군 강화읍 충렬사로 138</div>
+        <div class="tel">전화 032-932-2500</div>
+
+        <div class="btn-row">
+          <!-- 카카오맵/네이버맵 링크는 필요 시 교체 -->
+          <a class="btn" href="https://map.kakao.com/" target="_blank" rel="noopener">카카오맵 열기</a>
+          <a class="btn" href="https://m.map.naver.com/" target="_blank" rel="noopener">네이버지도 열기</a>
+          <a class="btn" href="tel:0329322500">전화하기</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 계좌번호 -->
+    <section class="section">
+      <div class="section-title">계좌번호</div>
+
+      <div class="account-box">
+        <div class="account-title">농협 윤창호</div>
+        <div class="account-line" id="accountNumber">351-0993-2488-03</div>
+        <div class="account-sub">복사 버튼을 누르면 계좌번호만 복사됩니다.</div>
+
+        <div class="btn-row">
+          <button class="btn" id="copyBtn" type="button">복사</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 라이트박스 -->
+  <div class="lb" id="lightbox" aria-hidden="true">
+    <div class="lb-inner">
+      <button class="lb-close" id="lbClose" type="button" aria-label="닫기">×</button>
+      <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="이전">‹</button>
+      <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="다음">›</button>
+      <img class="lb-img" id="lbImg" src="" alt="확대 이미지" />
+    </div>
+  </div>
+
+  <!-- 플로팅: 맨 위로 -->
+  <button class="fab-top" id="topBtn" type="button" aria-label="맨 위로">↑</button>
+
+  <!-- 토스트 -->
+  <div class="toast" id="toast">복사되었습니다.</div>
+
+  <!-- 카카오맵 로더: 페이지에 1번만 -->
+  <script charset="UTF-8" class="daum_roughmap_loader_script"
+    src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+
+  <script charset="UTF-8">
+    // -----------------------
+    // 1) 카카오맵 렌더
+    // -----------------------
+    new daum.roughmap.Lander({
+      "timestamp" : "1769079577391",
+      "key" : "g3j25mow3h4",
+      "mapWidth" : "320",
+      "mapHeight" : "350"
+    }).render();
+
+    // -----------------------
+    // 2) 계좌 복사 + 토스트
+    // -----------------------
+    const copyBtn = document.getElementById('copyBtn');
+    const accountEl = document.getElementById('accountNumber');
+    const toast = document.getElementById('toast');
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      window.clearTimeout(showToast._t);
+      showToast._t = window.setTimeout(() => toast.classList.remove('show'), 1200);
+    }
+
+    async function copyText(text){
+      // 숫자/하이픈만 복사
+      const only = (text || '').replace(/[^\d-]/g, '').trim();
+      if(!only) throw new Error('empty');
+
+      // 우선 최신 API
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(only);
+        return;
+      }
+
+      // 폴백 (구형 브라우저)
+      const ta = document.createElement('textarea');
+      ta.value = only;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (!ok) throw new Error('copy failed');
+    }
+
+    copyBtn.addEventListener('click', async () => {
+      try{
+        await copyText(accountEl.textContent);
+        showToast('복사되었습니다.');
+      }catch(e){
+        showToast('복사가 차단되었습니다. 길게 눌러 복사해 주세요.');
+      }
+    });
+
+    // -----------------------
+    // 3) 갤러리 라이트박스
+    // -----------------------
+    const imgs = [
+      'assets/g1.jpg',
+      'assets/g2.jpg',
+      'assets/g3.jpg',
+      'assets/g4.jpg',
+      'assets/g5.jpg',
+      'assets/g6.jpg',
+      'assets/g7.jpg'
+    ];
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    let cur = 0;
+
+    function openLB(i){
+      cur = i;
+      lbImg.src = imgs[cur];
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLB(){
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function prev(){
+      cur = (cur - 1 + imgs.length) % imgs.length;
+      lbImg.src = imgs[cur];
+    }
+    function next(){
+      cur = (cur + 1) % imgs.length;
+      lbImg.src = imgs[cur];
+    }
+
+    document.getElementById('gallery').addEventListener('click', (e) => {
+      const t = e.target;
+      if (t && t.dataset && t.dataset.idx != null){
+        openLB(Number(t.dataset.idx));
+      }
+    });
+
+    lbClose.addEventListener('click', closeLB);
+    lbPrev.addEventListener('click', prev);
+    lbNext.addEventListener('click', next);
+
+    // 배경 클릭 닫기
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) closeLB();
+    });
+
+    // 키보드 지원
+    window.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLB();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    });
+
+    // 모바일 스와이프(가벼운 버전)
+    let sx = 0, dx = 0;
+    lbImg.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; dx = 0; }, {passive:true});
+    lbImg.addEventListener('touchmove', (e) => { dx = e.touches[0].clientX - sx; }, {passive:true});
+    lbImg.addEventListener('touchend', () => {
+      if (Math.abs(dx) > 40) (dx > 0 ? prev() : next());
+    });
+
+    // -----------------------
+    // 4) 맨 위로 버튼
+    // -----------------------
+    const topBtn = document.getElementById('topBtn');
+
+    function onScroll(){
+      if (window.scrollY > 220) topBtn.classList.add('show');
+      else topBtn.classList.remove('show');
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
